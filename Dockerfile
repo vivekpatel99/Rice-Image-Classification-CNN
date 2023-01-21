@@ -2,8 +2,14 @@
 #FROM tensorflow/tensorflow:nightly-gpu-jupyter
 FROM tensorflow/tensorflow:latest-gpu-jupyter
 WORKDIR .
+
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6  -y
+
 RUN pip install --upgrade pip
-RUN pip install -U pandas autopep8 scikit-learn keras_tuner numpy opendatasets
+
+COPY requirements.txt /opt/app/
+RUN pip install -r /opt/app/requirements.txt
 
 EXPOSE 8888
 
